@@ -1,4 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function TarefaPag() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ function TarefaPag() {
 
             <h2>{titulo}</h2>
             <p id="descricao">{desc}</p>
+            <Footer/>
         </>
     )
 }

@@ -19,6 +19,7 @@ body {
 
 #root {
   max-width: 600px;
+  min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -135,6 +136,22 @@ input:focus {
 .todo-buttons {
   display: flex;
   gap: 0.5rem;
+}
+
+footer {
+  text-align: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 2px solid var(--secondary-color);
+}
+
+a {
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--secondary-color);
 }
 
 @media (max-width: 372px) {

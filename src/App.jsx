@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Tabs from "./components/Tabs";
 import TaskList from "./components/TaskList";
 import TaskInput from "./components/TaskInput";
+import Footer from './components/Footer';
 import { useState, useEffect } from "react";
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
       <TaskInput addTask={addTask}/>
       <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} tasks={tasks}/>
       <TaskList selectedTab={selectedTab} deleteTask={deleteTask} completeTask={completeTask} editTask={editTask} tasks={tasks}/>
+      <Footer/>
     </>
   )
 }

@@ -56,8 +56,7 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
 
             window.location.reload();
         } catch (err) {
-            console.log(err.message)
-            if (err.message.includes('invalid-credential')) return setError('E-mail ou senha inválidos.');
+            if (err.message.includes('invalid-credential') || err.message.includes('wrong-password')) return setError('E-mail ou senha inválidos.');
         } finally {
             setIsLoading(false);
         }

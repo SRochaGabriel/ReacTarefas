@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+    // STATES
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [viewPassword, setViewPassword] = useState(false);
@@ -11,11 +12,14 @@ export default function Login() {
     const [recoveringPass, setRecoveringPass] = useState(false);
     const [error, setError] = useState('');
 
+    // Valores do context + navigate
     const { signup, login, resetPassword } = useAuth();
     const navigate = useNavigate();
 
+    // Define se o botão de login/cadastro estará desativado ou não
     const cantAuth = !email || !password || !email.includes('@') || password.length < 6;
 
+    // Função que envia e-mail de recuperação de senha para o uusário
     async function handleResetPassword() {
         if (!email) {
             setError('Insira um E-mail para receber as instruções de recuperação de senha.');
@@ -26,13 +30,16 @@ export default function Login() {
         try {
             await resetPassword(email);
             alert('As instruções para a verificação da senha foram enviadas para o E-mail inserido. Verifique sua caixa de spam.');
-        } catch {
-            console.log(err.message);
+        } catch (err) {
+            if (err.message.includes('user-not-found')) {
+                return setError('Não possível enviar o link de recuperação para o E-mail que você informou.');
+            }
         } finally {
             setRecoveringPass(false);
         }
     }
 
+    // Função que autentica o usuário, seja para login ou cadastro e leva ele para a página das tarefas
     async function authUser() {
         if (!email || !password) {
             setError('Preencha todas as informações');
@@ -54,7 +61,7 @@ export default function Login() {
 
             navigate('/');
         } catch (err) {
-            if (err.message.includes('invalid-credential') || err.message.includes('auth/wrong-password')) {
+            if (err.message.includes('invalid-credential') || err.message.includes('auth/wrong-password') || err.message.includes('user-not-found')) {
                 return setError('E-mail e/ou senha estão incorretos.')
             } else if (err.message.includes('invalid-email')) {
                 return setError('Esse e-mail é inválido.')

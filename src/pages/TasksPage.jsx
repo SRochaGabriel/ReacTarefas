@@ -10,14 +10,17 @@ import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 
 export default function TasksPage() {
+    // Definindo states
     const [tasks, setTasks] = useState([]);
     const [savingTask, setSavingTask] = useState(false);
     const [fetching, setFetching] = useState(false);
     const [selectedTab, setSelectedTab] = useState(localStorage.getItem('tab') || 'Abertas');
 
+    // Buscando valores do contexto e instanciando navigate
     const { user, loadingUser } = useAuth();
     const navigate = useNavigate();
 
+    // Função que edita o state de tarefas e o valor da tarefa no banco de dados por meio da referência do documento
     async function editTask(taskId, title, description) {
         if (!taskId || !title) return;
 
@@ -42,6 +45,7 @@ export default function TasksPage() {
         }
     }
 
+    // função que adiciona uma tarefa no state de tarefas e a adiciona no banco de dados criando uma referência e setando o documento
     async function addTask(title, description) {
         if (!title) return;
 
@@ -72,6 +76,7 @@ export default function TasksPage() {
         }
     }
 
+    // função que deleta o doc de uma tarefa no banco de dados e remove essa tarefa do state 'tasks'
     async function deleteTask(taskId) {
         try {
             const taskRef = doc(db, 'users', user.uid, 'tasks', taskId);
@@ -85,6 +90,7 @@ export default function TasksPage() {
         }
     }
 
+    // função que coloca o valor de 'isDone' de uma tarefa para true, tanto no banco de dados quanto no state 'tasks'
     async function completeTask(taskId) {
         try {
             const taskRef = doc(db, 'users', user.uid, 'tasks', taskId);
@@ -103,6 +109,11 @@ export default function TasksPage() {
         }
     }
 
+    /*  use effect que:
+            1 - verifica se não há um usuário autenticado, caso não haja, leva para a página de login
+
+            2 - caso haja um usuário autenticado: busca a ref da coleção de documentos, faz a query por ordem de data de criação, busca os docs dessa query e, para cada doc da snapshot cria um objeto 'fetchedTask' e adiciona ele ao state 'tasks'
+    */
     useEffect(() => {
         if (!loadingUser && !user) {
             navigate('/auth');
@@ -132,6 +143,7 @@ export default function TasksPage() {
         fetchTasks();
     }, [user, loadingUser]);
 
+    // caso a aplicação esteja verificando se o usuario está autenticado
     if (loadingUser) {
         return (
             <Layout>
@@ -140,6 +152,7 @@ export default function TasksPage() {
         )
     }
 
+    // retornando o formulário de input das tarefas, as abas por "status" da tarefa e a lista de tarefas dentro do layout padrão
     return (
         <Layout>
             <TaskForm tasksNumber={tasks.length} addTask={addTask} savingTask={savingTask} />

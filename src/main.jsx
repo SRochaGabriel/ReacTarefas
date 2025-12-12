@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import TasksPage from './pages/TasksPage.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
+// definindo as rotas do site
 const router = createBrowserRouter([
   {
     path: '/auth',
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+// provider das rotas encapsulado pelo provider do contexto
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>

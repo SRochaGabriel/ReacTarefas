@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 
 export default function Task({ task, deleteTask, completeTask, editTask }) {
+    // transformando o timestamp de criação da task em uma data legível
     const creationDate = (new Date(task.createdAt)).toLocaleDateString('pt-BR');
+    // definindo estados
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [editTaskModal, setEditTaskModal] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
+    // useEffect que é chamado quando o modal de editar tarefa é exibido, seta os valores das states 'title' e 'description' de acordo com a task atual
     useEffect(() => {
         if (!editTaskModal) return;
 
@@ -17,6 +20,7 @@ export default function Task({ task, deleteTask, completeTask, editTask }) {
 
     return (
         <>
+            {/* Card (ou item da lista) com informações da tarefa e com opções de concluir, deletar ou editar */}
             <div className="task-card">
                 <div className="task-card-title">
                     <h4 onClick={() => setShowTaskModal(true)}>
@@ -41,6 +45,7 @@ export default function Task({ task, deleteTask, completeTask, editTask }) {
                 </div>
             </div>
 
+            {/* Modal que exibe as informações de uma tarefa */}
             {showTaskModal && (
                 <Modal setShowTaskModal={setShowTaskModal} modaltype={'task'}>
                     <div className="show-task-modal">
@@ -51,6 +56,7 @@ export default function Task({ task, deleteTask, completeTask, editTask }) {
                 </Modal>
             )}
 
+            {/* Modal que permite a edição das informações de uma tarefa */}
             {editTaskModal && (
                 <Modal setEditTaskModal={setEditTaskModal} modaltype={'edit'}>
                     <div className="edit-task-modal">

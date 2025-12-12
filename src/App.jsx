@@ -5,15 +5,18 @@ import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
 
 function App() {
+  // valores do contexto e instância do navigate
   const { user, loadingUser } = useAuth();
   const navigate = useNavigate();
 
+  // caso usuário esteja logado, não deixa ele na página auth
   useEffect(() => {
     if (!loadingUser && user) {
       navigate('/');
     }
   }, [user, loadingUser]);
 
+  // retorno que indica que a aplicação está conferindo se o usuário está autenticado
   if (loadingUser) {
     return (
       <Layout>
@@ -22,6 +25,7 @@ function App() {
     )
   }
 
+  // retorna o componente de login dentro do layout padrão
   return (
     <Layout>
       <Login />

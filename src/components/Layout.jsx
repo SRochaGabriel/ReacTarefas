@@ -4,14 +4,18 @@ import Modal from "./Modal";
 import Reauthentication from "./Reauthentication";
 
 export default function Layout({ children }) {
+    // Definindo states
     const [reauthenticating, setReauthenticating] = useState(false);
     const [showUserModal, setShowUserModal] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
 
+    // Valores do contexto
     const { user, logout } = useAuth();
 
+    // Layout padrão da aplicação
     return (
-        <>
+        <>  
+            {/* Header que exibe botões de 'usuário' e 'sair' caso o usuário esteja logado */}
             <header>
                 <h1>ReacTarefas</h1>
 
@@ -27,6 +31,7 @@ export default function Layout({ children }) {
                 )}
             </header>
 
+            {/* Modal que exibe as informações do usuário */}
             {showUserModal && (
                 <Modal setShowUserModal={setShowUserModal} modaltype={'user'}>
                     <div className="user-info-container">
@@ -37,8 +42,8 @@ export default function Layout({ children }) {
 
                         <div className="full-line"></div>
 
-                        {reauthenticating ? 
-                            <Reauthentication setReauthenticating={setReauthenticating} isDelete={isDelete}/> : 
+                        {/* Caso o usuário vá editar infos ou deletar a conta, exibe o componente 'Reauthentication', caso contrário, apenas exibe os botões de 'editar' e 'deletar' */}
+                        {reauthenticating ? <Reauthentication setReauthenticating={setReauthenticating} isDelete={isDelete}/> :
                             (
                                 <>
                                     <div className="user-info-body">
@@ -63,10 +68,12 @@ export default function Layout({ children }) {
                 </Modal>
             )}
 
+            {/* conteúdo principal que é definido via children */}
             <main>
                 {children}
             </main>
 
+            {/* rodapé */}
             <footer>
                 Desenvolvido por <a href="http://github.com/srochagabriel" target="_blank"><i className="fa-brands fa-github"/> SRochaGabriel</a>
             </footer>

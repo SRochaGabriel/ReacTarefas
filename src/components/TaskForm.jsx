@@ -6,12 +6,13 @@ export default function TaskForm({ tasksNumber, addTask, savingTask }) {
     const [error, setError] = useState(false);
 
     return (
-        <section id="task-form-container">
-            <h2>Você tem {tasksNumber} tarefas registradas</h2>
+        <>
+            <h2 className="task-number-title">Você tem {tasksNumber} tarefas registradas</h2>
+            <section id="task-form-container">
 
-            { error && <h4 style={{color: '#9e0e0eff'}}>{error}</h4>}
+                {error && <h4 style={{ color: '#9e0e0eff' }}>{error}</h4>}
 
-            <form onSubmit={e => {
+                <form onSubmit={e => {
                     e.preventDefault();
 
                     if (!title) {
@@ -24,12 +25,13 @@ export default function TaskForm({ tasksNumber, addTask, savingTask }) {
                     setTitle('');
                     setDescription('');
                 }}>
-                <input type="text" placeholder="Título da tarefa" value={title} onChange={e => setTitle(e.target.value)}/>
+                    <input type="text" placeholder="Título da tarefa" value={title} onChange={e => setTitle(e.target.value)} />
 
-                <textarea placeholder="Detalhes da tarefa" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                    <textarea placeholder="Detalhes da tarefa" value={description} onChange={e => setDescription(e.target.value)}></textarea>
 
-                <button type="submit" className="main-btn">{savingTask ? 'Salvando tarefa...' : 'Adicionar tarefa'}</button>
-            </form>
-        </section>
+                    <button type="submit" className="main-btn">{savingTask ? 'Salvando tarefa...' : 'Adicionar tarefa'}</button>
+                </form>
+            </section>
+        </>
     )
 }

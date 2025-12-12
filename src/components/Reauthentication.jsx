@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useAuth } from "../context/AuthContext";
 
 export default function Reauthentication({ isDelete, setReauthenticating }) {
+    // states para ver ou esconder senha, para cada input, para erro e para loading
     const [viewPassword, setViewPassword] = useState(false);
     const [viewNewPassowrd, setViewNewPassword] = useState(false);
     const [email, setEmail] = useState('');
@@ -11,8 +12,10 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    // valores do contexto
     const { deleteAccount, reauthenticate, updateUserEmail, updateUserPass, logout } = useAuth();
 
+    // Função de deleção de usuário, primeiro aguarda a reautenticação dele, depois aguarda o retorno da função de deletar conta e depois recarrega a página
     async function deleteUserAcc() {
         if (!email || !password) {
             return setError('Preencha seu E-mail e senha atuais para poder realizar essa operação.');
@@ -31,6 +34,9 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
         }
     }
 
+    // Função de edição do usuário, primeiro aguarda a reautenticação, depois aguarda as funções de update
+    // Caso atualize a senha, realiza logout junto
+    // Ao final, recarrega a página
     async function editUser() {
         if (!email || !password) {
             return setError('Preencha seu E-mail e senha atuais para poder realizar essa operação.');
@@ -63,6 +69,7 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
     }
 
     return (
+        // Form que confirma as infos do usuário antes de editar ou deletar
         <form className="reauth-form" onSubmit={e => {
             e.preventDefault();
 
@@ -81,6 +88,7 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
                 {viewPassword ? <i className="fa-solid fa-eye-slash" onClick={() => setViewPassword(!viewPassword)} /> : <i className="fa-solid fa-eye" onClick={() => setViewPassword(!viewPassword)} />}
             </div>
 
+            {/* Caso o usuário não esteja deletando a conta, mas sim editando as infos */}
             {!isDelete && (
                 <>
                     <div className="full-line"></div>
@@ -97,6 +105,7 @@ export default function Reauthentication({ isDelete, setReauthenticating }) {
                 </>
             )}
 
+            {/* Botões de exclusão da conta ou alteração das infos*/}
             <div className="btns-container">
                 <button type="button" className="main-btn" onClick={() => setReauthenticating(false)}>Cancelar</button>
                 <button type="submit" className="main-btn">

@@ -82,7 +82,7 @@ button:disabled {
 /* LOGIN */
 #login-form-container {
     background-color: var(--primary-color);
-    border-radius: 1rem;
+    border-radius: 10px;
     max-width: 500px;
     width: 100%;
     height: fit-content;
@@ -141,8 +141,11 @@ button:disabled {
 }
 
 /* TaskHeader */
-h2 {
+.task-number-title {
     color: var(--tertiary-color);
+    margin-bottom: 1rem;
+    max-width: 500px;
+    width: 100%;
 }
 
 /* TaskForm */
@@ -154,7 +157,7 @@ h2 {
     gap: 1rem;
     background-color: var(--primary-color);
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: 10px;
 }
 
 #task-form-container form {
@@ -259,7 +262,7 @@ nav span {
 
 /* MODAL */
 .modal {
-    background-color: #0000007c;
+    background-color: #000000ad;
     position: fixed;
     top: 0;
     left: 0;
@@ -279,7 +282,7 @@ nav span {
     max-width: 500px;
     width: 100%;
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: 10px;
 }
 
 .close-modal-btn {
